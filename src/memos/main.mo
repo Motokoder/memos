@@ -1,46 +1,58 @@
 import Nat "mo:base/Nat";
 import Text "mo:base/Text";
-import Hash "mo:base/Hash";
-import Map "mo:base/HashMap";
-import Iter "mo:base/Iter";
+import Result "mo:base/Result";
+import Types "./types";
+import Database "./database";
 
 actor Memos {
+    type Memo = Types.Memo;
+    type MemoListItem = Types.MemoListItem;
+    type Error = Types.Error;
 
-    type Memo = {
-        id: Nat;
-        content: Text;
-        // lastUpdate: Nat; // time in nanoseconds
-    };
+    stable var memosBackup : [(Nat,Memo)] = [];
 
-    stable var memosTemp : [(Nat,Memo)] = [];
+    var memos : Database.Memos = Database.Memos(memosBackup);
 
-    let memos = Map.fromIter<Nat,Memo>(
-        memosTemp.vals(), 10, Nat.equal, Hash.hash);
-
-    public func addMemo(content : Text) : async () {
-        let id = memos.size();
-
-        let memo : Memo = {
-            id = id;
-            content = content;
-        };
-
-        memos.put(id, memo);
-    };
-
-    public func findMemo(id : Nat) : async ?Memo {
+    public shared query func getMemo(id : Nat) : async ?Memo {
         return memos.get(id);
     };
 
+    public shared query func getMemoList() : async [MemoListItem] {
+        return memos.getList();
+    };
+
+    public shared func saveMemo(id : Nat, content : Text) : async Result.Result<Memo, Error>  {
+        // validate input
+        if (Text.trim(content, #text " ").size() == 0) {
+            return #err(#EmptyContent);
+        };
+
+        // add or update memo
+        if (id == 0) {
+            let newMemo = memos.add(content);
+            return #ok(newMemo);
+        } else {
+            let updatedMemo = memos.update(id, content);
+            switch (updatedMemo) {
+                case null {
+                    return #err(#NotFound);
+                };
+                case (?v) {
+                    return #ok(v);
+                }
+            };
+        };
+    };
+
+    public shared query func greet(name : Text) : async Text {
+        return "Hello, " # name # "!";
+    };
+
     system func preupgrade() {
-        memosTemp := Iter.toArray(memos.entries());
+        memosBackup := memos.getBackup();
     };
 
     system func postupgrade() {
-        memosTemp := [];
-    };
-
-    public func greet(name : Text) : async Text {
-        return "Hello, " # name # "!";
+        memosBackup := [];
     };
 };

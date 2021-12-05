@@ -53,3 +53,37 @@ If you are hosting frontend code somewhere without using DFX, you may need to ma
 ## Customize the frontend to use React
 
 https://smartcontracts.org/docs/developers-guide/tutorials/custom-frontend.html
+
+## Candid UI
+
+The Candid UI is pre-packaged with dfx, so there is no additional install.
+
+You can test your actor methods locally with Candid UI by updating the networks.local.bind value in dfx.json to the URL below. However, this can only be changed after running the *dfx start* command and before running the *dfx deploy* command. Ensure that the change does not get commited to Git.
+- 127.0.0.1:8000/candid?canisterId=[Candid UI Canister Id]
+- Example: 127.0.0.1:8000/candid?canisterId=r7inp-6aaaa-aaaaa-aaabq-cai
+
+To get the Candid UI canister Id, run this command:
+```
+dfx canister id __Candid_UI
+```
+
+After deploying your canisters, you will be able to open the Candid UI with the following URL:
+- http://127.0.0.1:8000/?canisterId=[Candid UI Canister Id]&id=[Your Canister Id]
+- Example: http://127.0.0.1:8000/?canisterId=r7inp-6aaaa-aaaaa-aaabq-cai&id=rrkah-fqaaa-aaaaa-aaaaq-cai
+
+To get your canister Id, run this command:
+```
+dfx canister id [your canister name from dfx.json]
+```
+
+For more information see: https://smartcontracts.org/docs/candid-guide/candid-howto.html.
+
+### Troubleshooting
+
+If you try to run the *dfx start* command with the Candid UI URL in dfx.json, you will get the following error message in your terminal:
+- thread 'main' panicked at 'could not get socket_addr: invalid port value', src/dfx/src/commands/start.rs:264:18
+
+If this happens, simply change the URL back to the default value:
+- 127.0.0.1:8000
+
+
