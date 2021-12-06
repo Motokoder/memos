@@ -1,3 +1,7 @@
+import Nat "mo:base/Nat";
+import Int "mo:base/Int";
+import Text "mo:base/Text";
+
 module Types {
     public type Memo = {
         id: Nat;

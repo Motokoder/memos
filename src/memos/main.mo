@@ -13,15 +13,23 @@ actor Memos {
 
     var memos : Database.Memos = Database.Memos(memosBackup);
 
-    public shared query func getMemo(id : Nat) : async ?Memo {
-        return memos.get(id);
+    public shared query func getMemo(id : Nat) : async Result.Result<Memo, Error> {
+        let memo = memos.get(id);
+        switch (memo) {
+            case null {
+                return #err(#NotFound);
+            };
+            case (?v) {
+                return #ok(v);
+            }
+        };
     };
 
     public shared query func getMemoList() : async [MemoListItem] {
         return memos.getList();
     };
 
-    public shared func saveMemo(id : Nat, content : Text) : async Result.Result<Memo, Error>  {
+    public shared func saveMemo(id : Nat, content : Text) : async Result.Result<MemoListItem, Error>  {
         // validate input
         if (Text.trim(content, #text " ").size() == 0) {
             return #err(#EmptyContent);
@@ -29,11 +37,11 @@ actor Memos {
 
         // add or update memo
         if (id == 0) {
-            let newMemo = memos.add(content);
-            return #ok(newMemo);
+            let newMemoListItem = memos.add(content);
+            return #ok(newMemoListItem);
         } else {
-            let updatedMemo = memos.update(id, content);
-            switch (updatedMemo) {
+            let updatedMemoListItem = memos.update(id, content);
+            switch (updatedMemoListItem) {
                 case null {
                     return #err(#NotFound);
                 };
