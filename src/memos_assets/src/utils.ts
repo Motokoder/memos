@@ -1,5 +1,5 @@
-import { Memo, MemoListItem } from "../../declarations/memos/memos.did";
-import { MemoViewModel } from "./types";
+import { Memo, MemoListItem } from '../../declarations/memos/memos.did';
+import { MemoViewModel } from './types';
 
 export const epochTimeToShortDate = (epochTime: BigInt) => {
     return new Date(Number(epochTime)).toLocaleDateString();

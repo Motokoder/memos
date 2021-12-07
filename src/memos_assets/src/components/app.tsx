@@ -1,9 +1,9 @@
-import * as React from "react";
-import { useState, useEffect, ChangeEvent } from "react";
-import * as Modal from "react-modal";
-import * as Api from "../api";
+import * as React from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
+import * as Modal from 'react-modal';
+import * as Api from '../api';
 import { sortMemoList, toMemoViewModel } from '../utils';
-import { MemoViewModel } from "../types";
+import { MemoViewModel } from '../types';
 import Main from './main';
 import Nav from './nav';
 

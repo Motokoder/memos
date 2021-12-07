@@ -1,6 +1,6 @@
-import * as React from "react";
-import { ChangeEvent, MouseEvent } from "react";
-import { MemoViewModel } from "../types";
+import * as React from 'react';
+import { ChangeEvent, MouseEvent } from 'react';
+import { MemoViewModel } from '../types';
 
 type Props = {
     currentMemo: MemoViewModel,

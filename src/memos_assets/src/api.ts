@@ -1,6 +1,6 @@
-import { memos } from "../../declarations/memos/index";
-import { MemoListItem } from "../../declarations/memos/memos.did";
-import { MemoViewModel } from "./types";
+import { memos } from '../../declarations/memos/index';
+import { MemoListItem } from '../../declarations/memos/memos.did';
+import { MemoViewModel } from './types';
 import { sortMemoList, toMemoViewModel } from './utils';
 
 const NotFound = 'NotFound';
