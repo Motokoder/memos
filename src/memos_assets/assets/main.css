@@ -88,13 +88,20 @@ button {
     padding: 10px;
 }
 
+#memo-buttons, .modal-buttons {
+    padding: 5px;
+}
+
 #memo-buttons {
     text-align: right;
-    padding: 5px;
     background-color: steelblue;
 }
 
-#memo-buttons button {
+.modal-buttons {
+    text-align: center;
+}
+
+#memo-buttons button, .modal-buttons button {
     width: 75px;
     margin: 0 0 0 10px;
 }

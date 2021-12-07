@@ -1,11 +1,11 @@
 import * as React from "react";
 import { useState, useEffect, ChangeEvent } from "react";
+import * as Modal from "react-modal";
 import * as Api from "../api";
 import { sortMemoList, toMemoViewModel } from '../utils';
 import { MemoViewModel } from "../types";
 import Main from './main';
 import Nav from './nav';
-
 
 export default function App () {
     const [currentMemo, setCurrentMemo] = useState<MemoViewModel>(null);
@@ -15,6 +15,8 @@ export default function App () {
     const [fetchingMemo, setFetchingMemo] = useState(false);
     const [fetchingMemoList, setFetchingMemoList] = useState(false);
     const [saving, setSaving] = useState(false);
+    const [modalIsOpen, setIsOpen] = React.useState(false);
+    const memoFieldRef : any = React.createRef();
 
     useEffect(() => {
         const init = async () => {
@@ -22,11 +24,30 @@ export default function App () {
             await getMemoList();
         };
         init();
+       
     }, []);
 
     function displayAlert(msg: string) {
         setAlertMessage(msg)
         setTimeout(() => setAlertMessage(null), 5000);
+    }
+
+    function openModal() {
+        setIsOpen(true);
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+        newMemo();
+    }
+
+    function confirmModal() : void {
+        setIsOpen(false);
+        setTimeout(async () => {
+            await saveMemo();
+            newMemo();
+        })
+
     }
 
     async function saveMemo() : Promise<void> {
@@ -52,7 +73,6 @@ export default function App () {
     }
 
     async function getMemo(id: bigint) : Promise<void> {
-        console.log('getMemo');
         try {
             setFetchingMemo(true);
 
@@ -86,13 +106,7 @@ export default function App () {
         }
     }
 
-    async function newMemo() : Promise<void> {
-        if (currentMemo?.changed) {
-            // TODO: Replace with a 'Yes', 'No' dialog.
-            if (confirm('Do you want to save existing memo changes?')) {
-                await saveMemo();
-            }
-        }
+    function newMemo() : void {
         setCurrentMemo(toMemoViewModel({ id: BigInt(0), updated: BigInt(0) }));
     }
 
@@ -102,6 +116,17 @@ export default function App () {
         setCurrentMemo({ ...currentMemo, content: newContent, changed });
     }
 
+    const customStyles = {
+        content: {
+          top: '50%',
+          left: '50%',
+          right: 'auto',
+          bottom: 'auto',
+          marginRight: '-50%',
+          transform: 'translate(-50%, -50%)',
+        },
+      };
+
     return (
         <>
         <header>
@@ -110,7 +135,8 @@ export default function App () {
         <div className="layout-center">
             <main className="layout-main">
                 <Main currentMemo={currentMemo} 
-                    saving={saving} alertMessage={alertMessage} newMemo={newMemo} 
+                    saving={saving} alertMessage={alertMessage} 
+                    newMemo={() => currentMemo?.changed ? openModal() : newMemo()} 
                     onMemoChanged={onMemoChanged} saveMemo={saveMemo} />
             </main>
             <nav className="layout-nav">
@@ -119,6 +145,21 @@ export default function App () {
             {/* <aside className="layout-aside"></aside> */}
         </div>
         {/* <footer></footer> */}
+
+        <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            style={customStyles}
+            contentLabel="Unsaved Changes"
+        >
+            <form>
+                <p>Do you want to save your existing memo changes?</p>
+                <div className="modal-buttons">
+                    <button onClick={confirmModal}>Yes</button>
+                    <button onClick={closeModal}>No</button>
+                </div>
+            </form>
+        </Modal>
         </>
     );
 };

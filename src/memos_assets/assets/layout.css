@@ -55,7 +55,7 @@ html, body {
   /* .layout-aside { } */
   /* .layout footer { } */
 
-  @media (min-width: 450px) {
+  @media (min-width: 500px) {
     .layout header {
       margin: 0;
     }

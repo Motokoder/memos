@@ -15,8 +15,14 @@ export default function Main (props: Props) {
     return (
         <>
             <div className="content-header memo-header">
-                <span>Id: {props.currentMemo?.displayId || ' - '}</span>
-                <span>Last Updated: {props.currentMemo?.displayDate || ' - '}</span>
+                { props.currentMemo?.id ?
+                    <>
+                    <span>Edit Memo ID: {props.currentMemo?.displayId || ' - '}</span>
+                    <span>Last Updated: {props.currentMemo?.displayDate || ' - '} {props.currentMemo?.displayTime || ''}</span>
+                    </>
+                    :
+                    <span>Create a New Memo</span>
+                }
             </div>
 
             {props.alertMessage &&
@@ -24,7 +30,7 @@ export default function Main (props: Props) {
             }
 
             {props.currentMemo &&
-                <textarea id="memo-field"
+                <textarea id="memo-field" autoFocus
                     value={props.currentMemo?.content}
                     onChange={props.onMemoChanged}
                     disabled={props.saving}>

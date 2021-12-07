@@ -14,7 +14,7 @@ export default function Nav (props: Props) {
         <div className="table memo-list">
             { props.memoList && 
                 <div className="row content-header">
-                    <span>Id</span>
+                    <span>ID</span>
                     <span>Last Updated</span>
                 </div>
             }
