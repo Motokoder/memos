@@ -1,12 +1,13 @@
 {
-  "name": "memos_assets",
+  "name": "memos",
   "version": "0.1.0",
-  "description": "Internet Computer starter application",
+  "description": "Create and edit memos on the Internet Computer.",
   "keywords": [
     "Internet Computer",
     "Motoko",
     "JavaScript",
-    "Canister"
+    "Canister",
+    "Memos"
   ],
   "scripts": {
     "build": "webpack",
@@ -14,23 +15,6 @@
     "start": "webpack serve --mode development --env development",
     "prestart": "npm run copy:types",
     "copy:types": "rsync -avr .dfx/$(echo ${DFX_NETWORK:-'**'})/canisters/** --exclude='assets/' --exclude='idl/' --exclude='*.wasm' --delete src/declarations"
-  },
-  "devDependencies": {
-    "@dfinity/agent": "0.10.1",
-    "@dfinity/candid": "0.10.1",
-    "@dfinity/principal": "0.10.1",
-    "assert": "2.0.0",
-    "buffer": "6.0.3",
-    "copy-webpack-plugin": "^9.0.1",
-    "events": "3.3.0",
-    "html-webpack-plugin": "5.5.0",
-    "process": "0.11.10",
-    "stream-browserify": "3.0.0",
-    "terser-webpack-plugin": "5.2.5",
-    "util": "0.12.4",
-    "webpack": "5.63.0",
-    "webpack-cli": "4.9.1",
-    "webpack-dev-server": "^4.4.0"
   },
   "browserslist": [
     "last 2 chrome version",
@@ -40,8 +24,29 @@
   ],
   "dependencies": {
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@dfinity/agent": "0.10.1",
+    "@dfinity/candid": "0.10.1",
+    "@dfinity/principal": "0.10.1",
+    "@types/node": "^12.20.7",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
+    "@types/react-redux": "^7.1.16",
+    "assert": "2.0.0",
+    "buffer": "6.0.3",
+    "copy-webpack-plugin": "^9.0.1",
+    "events": "3.3.0",
+    "html-webpack-plugin": "5.5.0",
+    "process": "0.11.10",
+    "stream-browserify": "3.0.0",
+    "terser-webpack-plugin": "5.2.5",
     "ts-loader": "^9.2.6",
-    "typescript": "^4.5.2"
+    "typescript": "^4.5.2",    
+    "util": "0.12.4",
+    "webpack": "5.63.0",
+    "webpack-cli": "4.9.1",
+    "webpack-dev-server": "^4.4.0"
   }
 }

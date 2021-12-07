@@ -1,11 +1,13 @@
-import { memos } from "../../declarations/memos";
-import { epochTimeToShortDate, sortMemoList } from './utils';
+import { memos } from "../../declarations/memos/index";
+import { MemoListItem } from "../../declarations/memos/memos.did";
+import { MemoViewModel } from "./types";
+import { sortMemoList, toMemoViewModel } from './utils';
 
 const NotFound = 'NotFound';
 const EmptyContent = 'EmptyContent';
 const UnexpectedError = 'Unexpected error.'
 
-export async function saveMemo(id, content) {
+export async function saveMemo(id: bigint, content: string) : Promise<MemoViewModel> {
     const result = await memos.saveMemo(id, content);
 
     if (result.err) {
@@ -21,7 +23,7 @@ export async function saveMemo(id, content) {
     return toMemoViewModel(result.ok);
 }
 
-export async function getMemo(id) {
+export async function getMemo(id: bigint) : Promise<MemoViewModel> {
     const result = await memos.getMemo(id);
 
     if (result.err) {
@@ -35,19 +37,12 @@ export async function getMemo(id) {
     return toMemoViewModel(result.ok);
 }
 
-export async function getMemoList() {
-    const result = await memos.getMemoList();
+export async function getMemoList() : Promise<MemoViewModel[]> {
+    const result: MemoListItem[] = await memos.getMemoList();
 
     sortMemoList(result);
 
     // array of MemoListItem
     return result.map(memo => toMemoViewModel(memo));
-}
-
-// Adds additonal display attributes to Memo and MemoListItem objects.
-function toMemoViewModel(memo) {
-    const viewModel = { ...memo, displayId: memo.id.toString(), displayDate: epochTimeToShortDate(memo.updated) };
-
-    return viewModel;
 }
 

@@ -21,7 +21,7 @@ actor Memos {
             };
             case (?v) {
                 return #ok(v);
-            }
+            };
         };
     };
 
@@ -47,13 +47,9 @@ actor Memos {
                 };
                 case (?v) {
                     return #ok(v);
-                }
+                };
             };
         };
-    };
-
-    public shared query func greet(name : Text) : async Text {
-        return "Hello, " # name # "!";
     };
 
     system func preupgrade() {

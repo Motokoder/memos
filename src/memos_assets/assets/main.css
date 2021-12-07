@@ -8,43 +8,93 @@ button {
     margin: 10px auto;
 }
 
-.header {
-    background-color: #555;
+.content-header {
+    display: table-cell;
+    height: 3em;
+    line-height: 3em;
+    padding: 0;
+    vertical-align: middle;
+    background-color: steelblue;
     color: whitesmoke;
 }
 
 .memo-header {
     display: flex;
     justify-content: space-between;
-    padding: 5px;
+}
+
+.memo-header span { 
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .table {
     display: table;
-    border-radius: 4px;
     border-collapse: collapse;
+}
+
+#memo-list-wrapper {
+    flex: 1;
+    overflow-y: scroll;
+}
+
+.table.memo-list {
+    border: 0;
+    width: 100%;
 }
 
 .table .row {
     display: table-row;
-    padding: 5px;
+    text-align: center;
 }
 
-.table .row span {
+.table .row > span {
     display: table-cell;
-    padding: 5px;
-    border: 1px solid #ccc;
+    padding: 2px;
+    border-bottom: 1px solid #ccc;
+    vertical-align: middle;
 }
 
-.table .row span button {
+.table .row.content-header span {
+    padding: 0 5px;
+    border: 0px;
+}
+
+.table .row button {
     padding: 2px;
     margin: 0;
 }
 
+.memo-list-item span:nth-child(1) {
+    font-size: larger;
+}
+
+.memo-list-item.enabled:hover {
+    cursor:pointer;
+    background-color: lightsteelblue;
+}
+
 #alert {
-    border: 1px solid black;
-    background-color: darkred;
-    color: whitesmoke;
-    border-radius: 4px;
+    font-size: larger;
+    color: darkred;
     text-align: center;
+}
+
+#memo-field, #memo-field:focus {
+    resize: none;
+    flex: 1;
+    border: none;
+    outline: none !important;
+    padding: 10px;
+}
+
+#memo-buttons {
+    text-align: right;
+    padding: 5px;
+    background-color: steelblue;
+}
+
+#memo-buttons button {
+    width: 75px;
+    margin: 0 0 0 10px;
 }
