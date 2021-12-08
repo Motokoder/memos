@@ -14,8 +14,8 @@ export default function Nav (props: Props) {
         <div className="table memo-list">
             { props.memoList && 
                 <div className="row content-header">
-                    <span>ID</span>
-                    <span>Last Updated</span>
+                    <div>ID</div>
+                    <div>Last Updated</div>
                 </div>
             }
         </div>
@@ -25,12 +25,13 @@ export default function Nav (props: Props) {
                 <div key={Number(m.id)}
                     className={`row memo-list-item ${!props.saving && 'enabled'}`}
                     onClick={() => !props.saving && props.getMemo(m.id)}>
-                    <span>{m.displayId}</span>
-                    <span>
-                        <span>{m.displayDate}</span>
-                        <br/>
-                        <span>{m.displayTime}</span>
-                    </span>
+                    <div>{m.displayId}</div>
+                    <div>
+                        <div>
+                            <div>{m.displayDate}</div>
+                            <div>{m.displayTime}</div>
+                        </div>
+                    </div>
                 </div>
             )}
             </div>

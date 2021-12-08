@@ -45,19 +45,32 @@ button {
 
 .table .row {
     display: table-row;
-    text-align: center;
 }
 
-.table .row > span {
+.table .row > div {
     display: table-cell;
-    padding: 2px;
+    padding: 2px 8px;
     border-bottom: 1px solid #ccc;
     vertical-align: middle;
+    white-space: nowrap;
 }
 
-.table .row.content-header span {
-    padding: 0 5px;
+.table .row.content-header div {
+    padding: 0 8px;
     border: 0px;
+}
+
+.table .row > div {
+    text-align: center;
+    width: 50%;
+}
+
+.table .row.memo-list-item > div:nth-child(1) {
+    font-size: larger;
+}
+
+.table .row.memo-list-item > div:nth-child(2) > div > div {
+    text-align: center;
 }
 
 .table .row button {
@@ -65,7 +78,7 @@ button {
     margin: 0;
 }
 
-.memo-list-item span:nth-child(1) {
+.memo-list-item div > div > div:nth-child(1) {
     font-size: larger;
 }
 
@@ -104,4 +117,20 @@ button {
 #memo-buttons button, .modal-buttons button {
     width: 75px;
     margin: 0 0 0 10px;
+}
+
+@media (min-width: 500px) {
+    .table .row > div:nth-child(1) {
+        text-align: left;
+    }
+
+    .table .row > div:nth-child(2) {
+        text-align: right;
+    }
+    
+    .table .row.memo-list-item > div:nth-child(2) > div {
+        float: right;
+    }
+
+
 }
